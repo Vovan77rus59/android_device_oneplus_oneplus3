@@ -29,7 +29,7 @@ $(call inherit-product, vendor/oneplus/oneplus3/oneplus3-vendor.mk)
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += \
     $(LOCAL_PATH)/overlay \
-    $(LOCAL_PATH)/overlay-lineage
+    $(LOCAL_PATH)/overlay-pixel
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
@@ -211,7 +211,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Camera
 PRODUCT_PACKAGES += \
-    Snap \
     android.hardware.camera.provider@2.4-impl \
     android.hardware.camera.provider@2.4-service
 
@@ -253,10 +252,6 @@ PRODUCT_PACKAGES += \
     qdcm_calib_data_samsung_s6e3fa3_1080p_cmd_mode_dsi_panel.xml \
     qdcm_calib_data_samsung_s6e3fa5_1080p_cmd_mode_dsi_panel.xml
 
-# Doze mode
-PRODUCT_PACKAGES += \
-    OneplusDoze
-
 # DRM
 PRODUCT_PACKAGES += \
     android.hardware.drm@1.0-impl \
@@ -269,7 +264,6 @@ PRODUCT_PACKAGES += \
 
 # Fingerprint sensor
 PRODUCT_PACKAGES += \
-    OneplusPocketMode \
     android.hardware.biometrics.fingerprint@2.1-service
 
 # Gatekeeper HAL
@@ -328,15 +322,6 @@ PRODUCT_PACKAGES += \
     lights.msm8996 \
     android.hardware.light@2.0-impl \
     android.hardware.light@2.0-service
-
-# Lineage hardware
-PRODUCT_PACKAGES += \
-    vendor.lineage.touch@1.0-service.oneplus3 \
-    vendor.lineage.trust@1.0-service
-
-# LiveDisplay
-PRODUCT_PACKAGES += \
-    vendor.lineage.livedisplay@2.0-service.oneplus3
 
 # Media
 PRODUCT_COPY_FILES += \
@@ -478,6 +463,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libui_shim
 
+# System navigation
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.boot.vendor.overlay.theme=com.android.internal.systemui.navbar.threebutton
+
 # Telephony
 PRODUCT_PACKAGES += \
     ims-ext-common \
@@ -560,6 +549,3 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_BOOT_JARS += \
     WfdCommon
-
-# Inherit from oppo-common
-$(call inherit-product, device/oppo/common/common.mk)
