@@ -29,11 +29,13 @@ def IncrementalOTA_Assertions(info):
 
 def AddModemAssertion(info, input_zip):
     android_info = input_zip.read("OTA/android-info.txt")
-    m = re.search(r'require\s+version-modem\s*=\s*(.+)$', android_info)
-    if m:
-        modem_version, build_version = m.group(1).split('|')
-        if modem_version and '*' not in modem_version:
-            cmd = ('assert(op3.verify_modem("{}") == "1" || abort("Modem firmware '
-                   'from {} or newer stock ROMs is prerequisite to be compatible '
-                   'with this build."););'.format(modem_version, build_version))
+    firmware = re.search(r'require\s+version-firmware\s*=\s*(.+)', android_info)
+    modem = re.search(r'require\s+version-modem\s*=\s*(.+)', android_info)
+    if firmware and modem:
+        firmware_version = firmware.group(1).rstrip()
+        modem_version = modem.group(1).rstrip()
+        if (len(firmware_version) and '*' not in firmware_version) and (len(modem_version) and '*' not in modem_version):
+            cmd = ('assert(op3.verify_modem("' + modem_version + '") == "1" || '
+                   'abort("Error: Firmware ' + firmware_version + ' or newer is required. '
+                   'Please upgrade firmware and try again!"););')
             info.script.AppendExtra(cmd)
