@@ -388,6 +388,10 @@ PRODUCT_PACKAGES += \
     libOmxVenc \
     libstagefrighthw
 
+# OPSettings
+PRODUCT_PACKAGES += \
+    OPSettings
+
 # Power
 PRODUCT_PACKAGES += \
     android.hardware.power@1.2-service-qti
